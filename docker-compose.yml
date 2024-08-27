@@ -1,0 +1,29 @@
+
+services:
+  db:
+    container_name: todo-postgres
+    image: postgres:15.8-bullseye
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - todo_db-volume:/var/lib/postgresql/data
+
+  pg:
+    container_name: pgadmin4
+    image: dpage/pgadmin4:8.10
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 5430:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PG_USER}
+      PGADMIN_DEFAULT_PASSWORD: ${PG_PASSWORD}
+
+volumes:
+  todo_db-volume:
+    external: true
