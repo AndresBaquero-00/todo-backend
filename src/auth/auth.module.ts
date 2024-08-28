@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { UserEntity } from './entities/user.entity';
-import { RoleEntity } from './entities/role.entity';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
+import { LocalStrategy } from './strategy';
 
 @Module({
   imports: [
@@ -12,7 +12,8 @@ import { RoleEntity } from './entities/role.entity';
       secret: process.env.JWT_SECRET_KEY,
       signOptions: { expiresIn: '8h' },
     }),
-    TypeOrmModule.forFeature([UserEntity, RoleEntity]),
   ],
+  controllers: [AuthController],
+  providers: [AuthService, LocalStrategy],
 })
 export class AuthModule {}

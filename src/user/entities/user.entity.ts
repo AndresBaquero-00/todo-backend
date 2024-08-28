@@ -23,9 +23,6 @@ export class UserEntity {
   email: string;
 
   @Column()
-  password: string;
-
-  @Column()
   phone: string;
 
   @ManyToOne(() => RoleEntity, (role) => role.users)
