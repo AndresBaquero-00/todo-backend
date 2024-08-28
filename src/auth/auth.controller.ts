@@ -11,9 +11,9 @@ import { Request, Response } from 'express';
 import { LocalAuthGuard } from './guards';
 import { Login } from './interfaces';
 
-@Controller('auth')
+@Controller('/auth')
 export class AuthController {
-  @Post('login')
+  @Post('/login')
   @UseGuards(LocalAuthGuard)
   public login(@Req() request: Request, @Res() response: Response) {
     const { token, ...user }: Login = request.user as Login;

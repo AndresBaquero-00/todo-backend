@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 export class AppController {
   public constructor(private appService: AppService) {}
 
-  @Get('seed')
+  @Get('/seed')
   public generateSeed(): void {
     this.appService.generateSeed();
   }

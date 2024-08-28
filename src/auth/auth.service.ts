@@ -12,7 +12,7 @@ export class AuthService {
   ) {}
 
   public async login(email: string): Promise<Login | undefined> {
-    const user = await this.userService.findUserByEmail(email);
+    const user = await this.userService.findByEmail(email);
     if (user === undefined) {
       return undefined;
     }
