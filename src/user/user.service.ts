@@ -1,17 +1,16 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { QueryFailedError, Repository } from 'typeorm';
+import { QueryFailedError } from 'typeorm';
 
-import { RoleEntity, UserEntity } from './entities';
+import { RoleRepository } from 'src/role/role.repository';
 import { CreateUserDTO, UpdateUserDTO } from './dto';
+import { UserEntity } from './entities';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
   public constructor(
-    @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
-    @InjectRepository(RoleEntity)
-    private roleRepository: Repository<RoleEntity>,
+    private userRepository: UserRepository,
+    private roleRepository: RoleRepository,
   ) {}
 
   private async exists(id: string): Promise<void> {
@@ -27,31 +26,20 @@ export class UserService {
     }
   }
 
-  public async findAll(): Promise<Partial<UserEntity>[]> {
-    return await this.userRepository.find({
-      relations: { role: true },
-      select: { role: { id: true, name: true } },
-    });
+  public async findAll(): Promise<UserEntity[]> {
+    return await this.userRepository.findAll();
   }
 
-  public async findById(id: string): Promise<Partial<UserEntity>> {
-    return await this.userRepository.findOne({
-      relations: { role: true },
-      select: { role: { id: true, name: true } },
-      where: { id },
-    });
+  public async findById(id: string): Promise<UserEntity> {
+    return await this.userRepository.findById(id);
   }
 
-  public async findByEmail(email: string): Promise<Partial<UserEntity>> {
-    return await this.userRepository.findOne({
-      relations: { role: true },
-      select: { role: { id: true, name: true } },
-      where: { email },
-    });
+  public async findByEmail(email: string): Promise<UserEntity> {
+    return await this.userRepository.findByEmail(email);
   }
 
   public async create(user: CreateUserDTO): Promise<{ id: string }> {
-    const role = await this.roleRepository.findOneBy({ id: user.role });
+    const role = await this.roleRepository.findById(user.role);
     try {
       const saved = await this.userRepository.save({
         ...user,
@@ -68,7 +56,8 @@ export class UserService {
 
   public async update(id: string, user: UpdateUserDTO): Promise<void> {
     await this.exists(id);
-    const role = await this.roleRepository.findOneBy({ id: user.role });
+
+    const role = await this.roleRepository.findById(user.role);
     try {
       await this.userRepository.update(
         { id },

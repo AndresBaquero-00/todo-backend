@@ -6,7 +6,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserEntity } from './user.entity';
+
+import { UserEntity } from 'src/user/entities';
 
 @Entity({ name: 'role' })
 export class RoleEntity {

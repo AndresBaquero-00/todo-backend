@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 
-import { RoleEntity, UserEntity } from './user/entities';
+import { UserRepository } from './user/user.repository';
+import { RoleRepository } from './role/role.repository';
 
 const roles = [
-  { id: 1, name: 'Admin' },
+  { id: 1, name: 'Administrador' },
   { id: 2, name: 'Coordinador' },
   { id: 3, name: 'Docente' },
   { id: 4, name: 'Estudiante' },
@@ -24,10 +23,8 @@ const users = [
 @Injectable()
 export class AppService {
   public constructor(
-    @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
-    @InjectRepository(RoleEntity)
-    private roleRepository: Repository<RoleEntity>,
+    private userRepository: UserRepository,
+    private roleRepository: RoleRepository,
   ) {}
 
   public async generateSeed(): Promise<void> {
