@@ -11,7 +11,7 @@ FROM node:20.17.0-slim AS prod-deps
 
 WORKDIR /app
 COPY . .
-RUN npm install --prod
+RUN npm install --omit=dev
 
 # Ejecutar aplicación de producción
 FROM node:20.17.0-slim AS prod
