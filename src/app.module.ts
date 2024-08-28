@@ -12,11 +12,11 @@ import { AppService } from './app.service';
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST,
+      host: '127.0.0.1',
       port: Number(process.env.DB_PORT),
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
+      database: process.env.DB_NAME,
       entities: [],
       synchronize: true,
       autoLoadEntities: true,

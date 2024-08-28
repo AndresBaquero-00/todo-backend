@@ -11,3 +11,4 @@
 - https://docs.nestjs.com/recipes/passport#implementing-passport-strategies
 - https://typeorm.io/entities
 - https://typeorm.io/many-to-one-one-to-many-relations
+- https://www.passportjs.org/tutorials/password/verify/

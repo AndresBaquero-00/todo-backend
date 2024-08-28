@@ -16,10 +16,13 @@ export class AuthController {
   @Post('login')
   @UseGuards(LocalAuthGuard)
   public login(@Req() request: Request, @Res() response: Response) {
-    const user: Login = request.user as Login;
+    const { token, ...user }: Login = request.user as Login;
     return response
       .status(HttpStatus.OK)
-      .header('Authorization', `Bearer ${user.token}`)
-      .send(user);
+      .header('Authorization', `Bearer ${token}`)
+      .send({
+        user,
+        token,
+      });
   }
 }
