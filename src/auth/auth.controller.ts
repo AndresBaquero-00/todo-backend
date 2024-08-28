@@ -9,14 +9,14 @@ import {
 import { Request, Response } from 'express';
 
 import { LocalAuthGuard } from './guards';
-import { Login } from './interfaces';
+import { ILogin } from './interfaces';
 
 @Controller('/auth')
 export class AuthController {
   @Post('/login')
   @UseGuards(LocalAuthGuard)
   public login(@Req() request: Request, @Res() response: Response) {
-    const { token, ...user }: Login = request.user as Login;
+    const { token, ...user }: ILogin = request.user as ILogin;
     return response
       .status(HttpStatus.OK)
       .header('Authorization', `Bearer ${token}`)

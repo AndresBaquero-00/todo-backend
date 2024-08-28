@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 
 import { AuthService } from '../auth.service';
-import { Login } from '../interfaces';
+import { ILogin } from '../interfaces';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -11,7 +11,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     super();
   }
 
-  public async validate(username: string, password: string): Promise<Login> {
+  public async validate(username: string, password: string): Promise<ILogin> {
     console.log('Validando existencia del usuario', username);
     const user = await this.authService.login(username);
     if (user === undefined) {

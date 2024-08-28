@@ -1,4 +1,4 @@
-export interface Payload {
+export interface IPayload {
   id: string;
   name: string;
   role: string;
