@@ -15,7 +15,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     console.log('Validando existencia del usuario', username);
     const user = await this.authService.login(username);
     if (user === undefined) {
-      throw new UnauthorizedException('El usuario no está registrado.');
+      throw new UnauthorizedException();
     }
 
     return user;
